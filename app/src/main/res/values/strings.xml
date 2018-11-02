@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">FrozaSimpleTuning</string>
+
+    <string name="WeightHeader">Weight Front Distribution</string>
+    <string name="WeightInput">50</string>
+    <string name="WeightInputHint">Front weight distribution value</string>
+
+    <string name="ZeroText">0</string>
+    <string name="MinInput">1</string>
+    <string name="MaxInput">65</string>
+    <string name="HeaderAxisText">AXIS</string>
+    <string name="MinInputHint">min</string>
+    <string name="MaxInputHint">max</string>
+    <string name="MinHeaderText">MIN</string>
+    <string name="MaxHeaderText">MAX</string>
+    <string name="ResultHeaderText">ESTIMATED</string>
+
+    <string name="ResultHint">estimate</string>
+    <string name="ResultValue">50</string>
+    <string name="Value_1">1</string>
+    <string name="Value_65">65</string>
+
+    <string name="FrontText">Front</string>
+    <string name="RearText">Rear</string>
+
+    <string name="BumpHeaderText">Bump Stiffness 50-75% Range</string>
+    <string name="ReboundHeaderText">Rebound Stiffness</string>
+    <string name="SpringsHeaderText">Springs</string>
+    <string name="AntiRollHeaderText">Anto-Roll Bars</string>
+    
+</resources>
