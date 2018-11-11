@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Forza Horizon 4 Simple Tuner</string>
+
+    <string name="WeightHeader">Распределение Переднего Веса</string>
+    <string name="WeightInput">50</string>
+    <string name="WeightInputHint">Процент Распределения Переднего Веса</string>
+
+    <string name="PopupMsgHeader">Описание</string>
+
+    <string name="ZeroText">0</string>
+    <string name="MinInput">1</string>
+    <string name="MaxInput">65</string>
+    <string name="HeaderAxisText">ОСЬ</string>
+    <string name="MinInputHint">мин</string>
+    <string name="MaxInputHint">макс</string>
+    <string name="MinHeaderText">МИН</string>
+    <string name="MaxHeaderText">МАКС</string>
+    <string name="ResultHeaderText">РАСЧЕТ</string>
+
+    <string name="ResultHint">расчет</string>
+    <string name="ResultValue">50</string>
+    <string name="Value_1">1</string>
+    <string name="Value_65">65</string>
+
+    <string name="FrontText">Передние</string>
+    <string name="RearText">Задние</string>
+
+    <string name="BumpHeaderText">Амортизация: Сжатие</string>
+    <string name="ReboundHeaderText">Амортизация: Отбой</string>
+    <string name="SpringsHeaderText">Пружины</string>
+    <string name="AntiRollHeaderText">Попер.Стабил-ры</string>
+</resources>

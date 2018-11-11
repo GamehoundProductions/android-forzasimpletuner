@@ -18,15 +18,22 @@ public class BumpStiffnessField extends InputField {
 
     @Override
     public void update(EditText whoIsCalling) {
-        if(formula == null)
+        if(formula == null) {
             return;
+        }
 
         float value = 0;
+        String fieldText = whoIsCalling.getText().toString();
+        //Russian language using commas instead of dots for decimal numbers. Java cant property
+        //parse that format into the number. Thus - need to replace comas with dots and life will be good.
+        fieldText = fieldText.replace(',', '.');
+
         try {
-            value = Float.parseFloat(whoIsCalling.getText().toString());
+            value = Float.parseFloat(fieldText);
         }catch (NumberFormatException err){
             value = -1;
         }
+
         float result = this.formula.calculate(value, -1, -1);
         this.GetSelf().setText(String.valueOf(result));
     }

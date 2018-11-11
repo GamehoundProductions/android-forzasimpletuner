@@ -1,8 +1,14 @@
 package com.apps.gamehoundgames.frozasimpletuning;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
         InputListener weightListener = new InputListener(this.WeightField.GetSelf());
         this.WeightField.SetDelegate(weightListener);
 
+        this.initFieldEntries();
+        this.initInfoButtons();
+    }//onCreate
+
+
+    private void initFieldEntries(){
         int[] reboundFrontId = this.GetReboundFrontId();
         int[] reboundRearId = this.GetReboundRearId();
 
@@ -71,22 +83,36 @@ public class MainActivity extends AppCompatActivity {
         this.rollBarsRear = new RearTunningEntry(this.getFieldsById(barsRearId));
         this.rollBarsRear.SetFormula(this.formulaRear);
 
+        //REAR Roll Bars
         this.configureRearMinMaxDelegate(this.rollBarsRear, this.rollBarsFront);
 
-//        this.rollBarsFront.GetResultField().update(this.WeightField.GetSelf());
         this.rollBarsRear.GetResultField().update(this.WeightField.GetSelf());
-    }//onCreate
+    }//initFieldEntries
 
 
-    private void createTuningEntry(int[] frontId, int[] rearId, ResultDelegate frontResult, ResultDelegate rearResult){
-        EditText[] reboundFrontField = getFieldsById(frontId);
-        EditText[] reboundRearField = getFieldsById(rearId);
+    /**
+     * Make all headers text views clickable to display alert message with description string.
+     */
+    private void initInfoButtons(){
+        int[] ids = this.GetInfoId();
+        String headerText = getString(R.string.PopupMsgHeader);
+        for(int i = 0; i < ids.length; i++){
+            TextView infoView = findViewById(ids[i]);
+            InfoMsgClickListener clicker = new InfoMsgClickListener(
+                    headerText,
+                    infoView.getContentDescription().toString(),
+                    getSupportFragmentManager()
+            );
+            infoView.setOnClickListener(clicker);
+        }//for
+    }//initInfoButtons
 
-        EventDelegate[] frontFields = this.makeInputFields(reboundFrontField);
-        EventDelegate[] rearFields = this.makeInputFieldCopyValues(reboundRearField);
-    }//createTuningEntry
 
-
+    /**
+     * Pass array of field IDs and get an array of EditText.
+     * @param fieldsId: View IDs to get EditText for.
+     * @return: EditText[] for each fieldsId, indices of which assigned with respect to fieldsID.
+     */
     public EditText[] getFieldsById(int[] fieldsId){
         EditText[] result = new EditText[fieldsId.length];
         for(int i = 0; i < fieldsId.length; i++){
@@ -103,130 +129,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * Create InputField(a custom class) objects from EditText fields.
-     * Will be used for onTextChanged event delegation.
-     *
-     * @param fields: array of fields to create InputFields from.
-     * @return: array of InputFields created from passed "fields".
-     */
-    private InputField[] makeInputFields(EditText[] fields){
-        InputField[] result = new InputField[fields.length];
-        for(int i = 0; i < fields.length; i++){
-            if(fields[i] == null){ //should not happened, but safety net to prevent crashes
-                result[i] = null;
-                continue;
-            }
-            result[i] = new InputField(fields[i]);
-        }//for
-
-        return result;
-    }//makeInputFields
-
-
-    /**
-     *  Same as makeInputFields, except using InputFieldCopyValue class.
-     *
-     * @param fields: array or EditText to create objects from.
-     * @return: array of objects based of passed fields.
-     */
-    private InputFieldCopyValue[] makeInputFieldCopyValues(EditText[] fields){
-        //FIXME: This is a copy of makeInputFields function. Need a better way to do this...
-        InputFieldCopyValue[] result = new InputFieldCopyValue[fields.length];
-        for(int i = 0; i < fields.length; i++){
-            if(fields[i] == null){ //should not happened, but safety net to prevent crashes
-                result[i] = null;
-                continue;
-            }
-            result[i] = new InputFieldCopyValue(fields[i]);
-        }//for
-
-        return result;
-    }//makeInputFields
-
-
-    /**
-     *  Set event delegation on addTextChange for the rebound inputs, where Result field will be
-     * notified whenever min and max input is changed.
-     * @param resultId: <R.id...> id of the input which will be listening to min/max changes.
-     * @param fields: fields that will notify resultId field on change.
-     * @return: a listening field that was created to listen for "fields" changes.
-     */
-    private ResultDelegate configureReboundInputs(int resultId, EventDelegate[] fields){
-        EditText resultField = findViewById(resultId);
-        ResultDelegate resultEvent = new ResultDelegate(
-                resultField,
-                this.WeightField.GetSelf(),
-                fields[0].GetSelf(),
-                fields[1].GetSelf()
-                );
-
-        for(int i = 0; i < fields.length; i++){
-            if(fields[i] == null)
-                continue;
-
-            InputListener fieldListener = new InputListener(fields[i].GetSelf());
-            fieldListener.register(resultEvent);
-            fields[i].SetDelegate(fieldListener);
-
-            fields[i].GetSelf().addTextChangedListener(fieldListener);
-        }//for
-
-        return resultEvent;
-    }//configureReboundInputs
-
-
-    private ResultDelegate[] configureBumpStiffness(EditText[] fields, ResultDelegate resultFields){
-        ResultDelegate[] minMax = new ResultDelegate[fields.length];
-        for(int i = 0; i < fields.length; i++){
-            EditText min = null;
-            EditText max = null;
-
-            if(i == 0)  min = this.WeightField.GetSelf();
-            else max = this.WeightField.GetSelf();
-
-            minMax[i] = new ResultDelegate( fields[i], null, min, max);
-            minMax[i].SetFormula(this.formulaBumpMax);
-            resultFields.AddListener(minMax[i]);
-        }//for
-        return minMax;
-    }//configureBumpStiffness
-
-
-    /**
      * Set Rear min and max rebound values to be the same as Front min-max on their change.
      * Note: Front min-max is independant from Rear min-max.
      */
     private void configureRearMinMaxDelegate(TuningEntry field, TuningEntry delegate){
         delegate.GetMin().GetDelegate().register(field.GetMin());
         delegate.GetMax().GetDelegate().register(field.GetMax());
-//        this.reboundFrontFields[0].GetDelegate().register(
-//                this.reboundRearFields[0]
-//        );
-//
-//        this.reboundFrontFields[1].GetDelegate().register(
-//                this.reboundRearFields[1]
-//        );
     }//configureRearMinMaxDelegate
 
-
-    /**
-     *  There are several fields (e.g. all result fields) that are listening to Weight field changes.
-     * Thus, need to subscribe those fields to weight's input changes.
-     */
-    private void configureWeightDelegates(){
-        EventDelegate[] fieldsToDelegateTo = new EventDelegate[]{
-                this.reboundFront.GetResultField()
-//                this.reboundResults[0],
-//                this.reboundResults[1],
-        };
-
-        for(int i = 0; i < fieldsToDelegateTo.length; i++){
-            this.WeightField.GetDelegate().register(fieldsToDelegateTo[i]);
-        }//for
-
-        this.WeightField.GetSelf().addTextChangedListener(this.WeightField.GetDelegate());
-    }//configureWeightDelegates
-
+    /* View Fields ID groups */
 
     public int[] GetReboundFrontId(){
         return new int[]{
@@ -292,5 +203,16 @@ public class MainActivity extends AppCompatActivity {
                 R.id.RollBarsRearResult
         };
     }//GetRollBarsFrontId
+
+    public int[] GetInfoId(){
+        return new int[]{
+                R.id.WeightInfoBtn,
+                R.id.MinInfoBtn, R.id.MaxInfoBtn, R.id.EstimatedInfoBtn,
+                R.id.ReboundInfoBtn,
+                R.id.BumpInfoBtn,
+                R.id.SpringsInfoBtn,
+                R.id.AntirollInfoBtn
+        };
+    }//GetInfoId
 
 }//class
