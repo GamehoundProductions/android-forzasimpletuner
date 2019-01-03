@@ -2,4 +2,11 @@
 <resources>
     <dimen name="info_icon_size">20dp</dimen>
     <dimen name="entry_box_size">130dp</dimen>
+    <dimen name="axis_header_width">80dp</dimen>
+    <dimen name="clickable_header_width">180dp</dimen>
+    <dimen name="header_padding_top">10dp</dimen>
+
+    <dimen name="header_dsc_width">50dp</dimen>
+    <dimen name="header_result_width">90dp</dimen>
+
 </resources>

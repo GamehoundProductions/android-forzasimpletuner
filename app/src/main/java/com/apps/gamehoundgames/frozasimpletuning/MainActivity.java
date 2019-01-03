@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         int[] barsRearId = this.GetRollBarsRearId();
 
         this.rollBarsFront = new TuningEntry(this.getFieldsById(barsFrontId));
+        this.rollBarsFront.GetResultField().GetSelf().setText("33.00");
         this.rollBarsRear = new RearTunningEntry(this.getFieldsById(barsRearId));
         this.rollBarsRear.SetFormula(this.formulaRear);
 
