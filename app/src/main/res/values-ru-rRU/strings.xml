@@ -30,4 +30,10 @@
     <string name="ReboundHeaderText">Амортизация: Отбой</string>
     <string name="SpringsHeaderText">Пружины</string>
     <string name="AntiRollHeaderText">Попер.Стабил-ры</string>
+
+    <string name="DampingText">Аморт.</string>
+    <string name="WeightText">Вес</string>
+    <string name="AntiRollTextShort">Стаб.</string>
+    <string name="HelpTextHeader">Информация</string>
+
 </resources>

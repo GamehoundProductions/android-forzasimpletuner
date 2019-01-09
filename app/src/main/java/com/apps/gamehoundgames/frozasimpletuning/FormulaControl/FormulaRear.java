@@ -1,4 +1,6 @@
-package com.apps.gamehoundgames.frozasimpletuning;
+package com.apps.gamehoundgames.frozasimpletuning.FormulaControl;
+
+import com.apps.gamehoundgames.frozasimpletuning.FormulaControl.Formula;
 
 public class FormulaRear extends Formula {
     @Override

@@ -1,6 +1,4 @@
-package com.apps.gamehoundgames.frozasimpletuning;
-
-import com.apps.gamehoundgames.frozasimpletuning.EventDelegate;
+package com.apps.gamehoundgames.frozasimpletuning.InputFields;
 
 //Source: https://www.journaldev.com/1739/observer-design-pattern-in-java
 public interface Delegate {
