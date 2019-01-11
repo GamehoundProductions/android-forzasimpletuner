@@ -1,4 +1,4 @@
-package com.apps.gamehoundgames.frozasimpletuning;
+package com.apps.gamehoundgames.frozasimpletuning.FormulaControl;
 
 public class Formula {
 

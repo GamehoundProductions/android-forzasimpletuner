@@ -1,6 +1,7 @@
-package com.apps.gamehoundgames.frozasimpletuning;
+package com.apps.gamehoundgames.frozasimpletuning.InputFields;
 
 import android.widget.EditText;
+
 
 public class InputField implements EventDelegate {
 
@@ -25,6 +26,7 @@ public class InputField implements EventDelegate {
 
     @Override
     public EditText GetSelf() { return this.itself; }
+
 
     @Override
     public InputListener GetDelegate() {

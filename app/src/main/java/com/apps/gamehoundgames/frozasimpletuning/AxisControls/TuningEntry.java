@@ -1,8 +1,12 @@
-package com.apps.gamehoundgames.frozasimpletuning;
+package com.apps.gamehoundgames.frozasimpletuning.AxisControls;
 
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.content.SharedPreferences;
 import android.widget.EditText;
+
+import com.apps.gamehoundgames.frozasimpletuning.FormulaControl.Formula;
+import com.apps.gamehoundgames.frozasimpletuning.InputFields.InputField;
+import com.apps.gamehoundgames.frozasimpletuning.InputFields.InputListener;
+import com.apps.gamehoundgames.frozasimpletuning.other.CommonActions;
 
 /**
  * Object containng min,max and result fields for the of a tuning entry.
@@ -11,25 +15,35 @@ public class TuningEntry {
 
     protected InputField[] fields;
     protected ResultDelegate resultField;
+//    protected Activity currentActivity;
 
     /**
      *
-     * @param exitTextFields: fields [min, max, result];
+     * @param editTextFields: fields [min, max, result];
      */
-    public TuningEntry(EditText[] exitTextFields){
-        this.fields = this.makeInputFields(new EditText[]{exitTextFields[0], exitTextFields[1]});
+    public TuningEntry(EditText[] editTextFields){
+        this.init(editTextFields);
+    }//ctor
 
-        if(exitTextFields[2] != null) {
+
+    protected void init(EditText[] editTextFields){
+        this.fields = this.makeInputFields(new EditText[]{editTextFields[0], editTextFields[1]});
+
+        if(editTextFields[2] != null) {
             this.resultField = new ResultDelegate(
-                    exitTextFields[2],
-                    MainActivity.WeightField.GetSelf(),
+                    editTextFields[2],
+                    null,
                     this.fields[0].GetSelf(),
                     this.fields[1].GetSelf());
+
+            String resultIdStr = Integer.toString(this.resultField.GetSelf().getId());
+            String fieldValue = CommonActions.GetPrefValue(resultIdStr);
+            this.resultField.GetSelf().setText(fieldValue);
         }//if
 
         this.configureReboundInputs();
-        this.subscribeToWeightField();
-    }//ctor
+//        this.subscribeToWeightField();
+    }//init
 
 
     /**
@@ -40,6 +54,7 @@ public class TuningEntry {
      * @return: array of InputFields created from passed "fields".
      */
     protected InputField[] makeInputFields(EditText[] fields){
+        SharedPreferences prefs = CommonActions.GetSharedPrefs(null);
         InputField[] result = new InputField[fields.length];
         for(int i = 0; i < fields.length; i++){
             if(fields[i] == null){
@@ -47,6 +62,9 @@ public class TuningEntry {
                 continue;
             }
             result[i] = new InputField(fields[i]);
+
+            String inputIdStr = Integer.toString(result[i].GetSelf().getId());
+            result[i].GetSelf().setText(CommonActions.GetPrefValue(inputIdStr));
         }//for
 
         return result;
@@ -54,9 +72,9 @@ public class TuningEntry {
 
 
     protected void subscribeToWeightField(){
-        MainActivity.WeightField.GetDelegate().register(this.resultField);
+//        MainActivity.WeightField.GetDelegate().register(this.resultField);
 
-        MainActivity.WeightField.GetSelf().addTextChangedListener(MainActivity.WeightField.GetDelegate());
+//        MainActivity.WeightField.GetSelf().addTextChangedListener(MainActivity.WeightField.GetDelegate());
     }
 
     /**
@@ -64,7 +82,7 @@ public class TuningEntry {
      * notified whenever min and max input is changed.
      * @return: a listening field that was created to listen for "fields" changes.
      */
-    private void configureReboundInputs(){
+    protected void configureReboundInputs(){
         if(this.resultField == null) //sometimes, result is not set, but min and max are
             return;
 
@@ -76,8 +94,8 @@ public class TuningEntry {
             fieldListener.register(this.resultField);
             fields[i].SetDelegate(fieldListener);
 
-//            fields[i].GetSelf().addTextChangedListener(fieldListener);
             fields[i].GetSelf().setOnFocusChangeListener(fieldListener);
+            fields[i].GetSelf().addTextChangedListener(fieldListener);
         }//for
     }//configureReboundInputs
 

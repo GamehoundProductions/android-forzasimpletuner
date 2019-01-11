@@ -1,8 +1,11 @@
-package com.apps.gamehoundgames.frozasimpletuning;
+package com.apps.gamehoundgames.frozasimpletuning.FormulaControl;
 
-public class FormulaBumpMax extends Formula {
+import com.apps.gamehoundgames.frozasimpletuning.FormulaControl.Formula;
+
+public class FormulaBumpMin extends Formula {
 
     /**
+     *
      * @param frontWeight: not really a front weight! Instead - a value to calculate Min value from.
      * @param min: set to -1
      * @param max: set to -1
@@ -10,6 +13,7 @@ public class FormulaBumpMax extends Formula {
      */
     @Override
     public float calculate(float frontWeight, float min, float max) {
-        return frontWeight * 0.75f;
+        return frontWeight * 0.50f;
     }//calculate
+
 }//class

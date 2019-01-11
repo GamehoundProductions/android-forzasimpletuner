@@ -27,7 +27,11 @@
 
     <string name="BumpHeaderText">Bump Stiffness Range</string>
     <string name="ReboundHeaderText">Rebound Stiffness</string>
+    <string name="DampingText">Damping</string>
+    <string name="WeightText">Weight</string>
+    <string name="AntiRollTextShort">A-R B.</string>
     <string name="SpringsHeaderText">Springs</string>
     <string name="AntiRollHeaderText">Anti-Roll Bars</string>
-    
+
+    <string name="HelpTextHeader">Help</string>
 </resources>

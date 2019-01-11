@@ -1,19 +1,28 @@
-package com.apps.gamehoundgames.frozasimpletuning;
+package com.apps.gamehoundgames.frozasimpletuning.AxisControls;
 
+import android.content.SharedPreferences;
+import android.support.v4.app.SupportActivity;
 import android.util.Log;
 import android.widget.EditText;
+
+import com.apps.gamehoundgames.frozasimpletuning.FormulaControl.Formula;
+import com.apps.gamehoundgames.frozasimpletuning.InputFields.EventDelegate;
+import com.apps.gamehoundgames.frozasimpletuning.InputFields.InputListener;
+import com.apps.gamehoundgames.frozasimpletuning.other.CommonActions;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResultDelegate implements EventDelegate{
+public class ResultDelegate implements EventDelegate {
 
     private Formula formula;
     private EditText itselfField;
     private EditText weightField, minField, maxField;
     private InputListener delegate;
     private List<EventDelegate> otherListeners;
+    private String prefName;
+//    private Activity currActivity;
 
 
     public ResultDelegate(EditText itself, EditText weight, EditText min, EditText max){
@@ -24,15 +33,18 @@ public class ResultDelegate implements EventDelegate{
 
         this.formula = new Formula();
         this.otherListeners = new ArrayList<>();
+
+        String inputIdStr = Integer.toString(this.itselfField.getId());
+        this.prefName = inputIdStr;
     }//ctor
 
-    /*
-     * Get fields to calculate result by using a Formula, whenever delegated input has changed (e.g
-     * weight, min or max fields).
-    */
-    @Override
-    public void update(EditText whoIsCalling) {
-        float weight = GetValue(this.weightField);
+
+    public void CalculateResult(){
+        float weight;
+        String weightStr = CommonActions.GetPrefWeight(null);
+
+        weight = CommonActions.StringToFloat(weightStr);
+
         float min = GetValue(this.minField);
         float max = GetValue(this.maxField);
 
@@ -40,6 +52,20 @@ public class ResultDelegate implements EventDelegate{
         DecimalFormat df = new DecimalFormat("#.00");
         this.itselfField.setText(String.valueOf(df.format(result)));
 
+        SharedPreferences prefs = CommonActions.GetSharedPrefs(null);
+        if(prefs != null) {
+            prefs.edit().putString(this.prefName, this.itselfField.getText().toString()).apply();
+        }
+    }//CalculateResult
+
+
+    /*
+     * Get fields to calculate result by using a Formula, whenever delegated input has changed (e.g
+     * weight, min or max fields).
+    */
+    @Override
+    public void update(EditText whoIsCalling) {
+        this.CalculateResult();
         NotifyListeners();
     }//update
 
@@ -69,6 +95,7 @@ public class ResultDelegate implements EventDelegate{
         }
     }//GetValue
 
+
     @Override
     public EditText GetSelf() { return this.itselfField; }
 
@@ -87,5 +114,10 @@ public class ResultDelegate implements EventDelegate{
             return;
         this.otherListeners.add(listener);
     }//AddListener
+
+
+//    public void SetActivity(Activity currActivity){
+//        this.currActivity = currActivity;
+//    }
 
 }//class

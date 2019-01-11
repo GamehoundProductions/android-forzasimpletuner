@@ -1,7 +1,13 @@
-package com.apps.gamehoundgames.frozasimpletuning;
+package com.apps.gamehoundgames.frozasimpletuning.AxisControls;
 
-import android.util.Log;
 import android.widget.EditText;
+
+import com.apps.gamehoundgames.frozasimpletuning.FormulaControl.Formula;
+import com.apps.gamehoundgames.frozasimpletuning.FormulaControl.FormulaBumpMax;
+import com.apps.gamehoundgames.frozasimpletuning.FormulaControl.FormulaBumpMin;
+import com.apps.gamehoundgames.frozasimpletuning.InputFields.InputField;
+import com.apps.gamehoundgames.frozasimpletuning.InputFields.InputListener;
+import com.apps.gamehoundgames.frozasimpletuning.other.CommonActions;
 
 public class BumpStiffnessEntry extends TuningEntry {
 
@@ -35,6 +41,10 @@ public class BumpStiffnessEntry extends TuningEntry {
             else formula = new FormulaBumpMax();
 
             result[i].SetFormula(formula);
+
+            String inputIdStr = Integer.toString(result[i].GetSelf().getId());
+            String savedVal = CommonActions.GetPrefValue(inputIdStr);
+            result[i].GetSelf().setText(savedVal);
         }//for
 
         return result;
@@ -45,6 +55,9 @@ public class BumpStiffnessEntry extends TuningEntry {
         BumpStiffnessField[] inputs = (BumpStiffnessField[])this.GetMinMax();
         for(int i = 0; i < inputs.length; i++){
             this.resultField.AddListener(inputs[i]);
+
+            InputListener fieldListener = new InputListener(inputs[i].GetSelf());
+            inputs[i].GetSelf().addTextChangedListener(fieldListener);
         }//for
     }//configureBumpStiffness
 

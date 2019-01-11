@@ -1,6 +1,8 @@
-package com.apps.gamehoundgames.frozasimpletuning;
+package com.apps.gamehoundgames.frozasimpletuning.InputFields;
 
 import android.widget.EditText;
+
+import com.apps.gamehoundgames.frozasimpletuning.InputFields.InputListener;
 
 public interface EventDelegate {
     //method to update the observer, used by subject

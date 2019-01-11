@@ -1,15 +1,20 @@
-package com.apps.gamehoundgames.frozasimpletuning;
+package com.apps.gamehoundgames.frozasimpletuning.AxisControls;
 
 import android.widget.EditText;
 
-public class RearTunningEntry extends TuningEntry {
+import com.apps.gamehoundgames.frozasimpletuning.InputFields.InputField;
+import com.apps.gamehoundgames.frozasimpletuning.InputFields.InputFieldCopyValue;
+import com.apps.gamehoundgames.frozasimpletuning.other.CommonActions;
+
+public class RearTuningEntry extends TuningEntry {
 
 
     /**
      * @param exitTextFields
      */
-    public RearTunningEntry(EditText[] exitTextFields) {
+    public RearTuningEntry(EditText[] exitTextFields) {
         super(exitTextFields);
+
     }
 
 
@@ -22,6 +27,9 @@ public class RearTunningEntry extends TuningEntry {
                 continue;
             }
             result[i] = new InputFieldCopyValue(fields[i]);
+
+            String inputIdStr = Integer.toString(result[i].GetSelf().getId());
+            result[i].GetSelf().setText(CommonActions.GetPrefValue(inputIdStr));
         }//for
 
         return result;

@@ -2,25 +2,25 @@
 <resources>
 
     <string name="WeightDistroDsc">
-        Front Weight Distribution percentage.\n
-        This value can be found below the "Weight" value in the information box when installing new
-        parts in the "Upgrades and Tuning" -> "Custom Upgrade".
+        Front Weight Distribution (e.g. Weight) percentage can be found the game when upgrading your car.
+        In the \"Upgrades and Tuning\" -> \"Custom Upgrade\" look in the left \"information\" box when
+        installing new parts.
         \n\n
         Typically, it is advised to keep your car as light as possible, but that might not always
         be the case for You. Sometimes weight can help with the grip for the rear-wheel-drive cars.
         \n\n
         Rebound Stiffness, Springs and Anti-Roll Bars calculated with the following formula:\n
-        Front: [(Max - Min) * (Front Weight% / 100)] + Min = estimated value\n
-        Rear: [(Max - Min) * (Rear Weight% / 100)] + Min = estimated value\n
         \n
-        "Max and Min" are the Maximum and Minimum possible adjustable values available for the field
-        you estimating settings of.\n
+        <b>Front: [(Max - Min) * (FW / 100)] + Min = EV\n</b>
+        <b>Rear: [(Max - Min) * (RW% / 100)] + Min = EV\n</b>
+        \n
 
-        "Rear Weight" is (100 - Front Weight%). So if your Front Weight Distribution is 55%, Rear Weight
-        is 45%.
-        \n\n
-        Bump Stiffness is explained in the In Game description. It is a value between 50-75% of calculated
-        Rebound Stiffness for the Front and Rear.
+        \"Max and Min\" are the Maximum and Minimum possible adjustable values available for the field
+        you estimating settings of. Move field\'s slider all the way to the left (for Min) and to the right
+        (for Max).\n\n
+        FW - Front Weight Distribution (e.g. in-game weight value).\n\n
+        RW - Rear Weight Distribution (e.g. \"100 - FrontWeight\").\n\n
+        EV - Calculated Estimated Value.\n\n
     </string>
 
     <string name="MinValueDsc">
@@ -44,10 +44,14 @@
 
     <string name="ReboundDsc">
         Rebound and Bump Stiffness controls how your car reacts to the uneven and bumpy roads. If you
-        are losing control when driving through uneven roads - tune Rebound and Dump stiffness.\n
-        \n
+        are losing control when driving through uneven roads - adjust Rebound and Bump stiffness.\n\n
         Lowering Front Rebound Stiffness can help reduce Understeer.\n
-        Decrease Rear Rebound Stiffness to reduce Oversteer.\n
+        Decrease Rear Rebound Stiffness to reduce Oversteer.\n\n
+        Front and Rear Bump Stiffness values are between 50 and 70 percent of Front and Rear Rebound
+        Stiffness estimated values.\n\n
+        Increasing Front bump stiffness helps to reduce Understeer problems.\n
+        When car is Unstable at high speed: adjust between Min and Max for both Front and Rear relative
+        to your current Rebound Stiffness.
     </string>
 
 
@@ -61,9 +65,7 @@
 
 
     <string name="SpringsDsc">
-        In Game description says it all. Using the same formula(check Weight Distribution info button)
-        to estimate Front and Rear base values. Estimated value gives you a baseline to start tuning
-        from.\n
+        In-game description says it all. Using the same formula to estimate Front and Rear base values.\n
         \n
         Soften(decrease) Front Springs to reduce Understeer.\n
         When car is Unstable at high speed: softening(decreasing) Front Springs may help stabilize it.
@@ -71,7 +73,7 @@
 
 
     <string name="AntiRollDsc">
-        In Game description says it all. Estimated value gives you a baseline to start tuning from.\n
+        In-game description says it all. Estimated value gives you a baseline to start your tuning from.\n
         \n
         Soften(decrease) Front Anti Roll helps reduce Understeer.\n
         Soften(decrease) Rear Ani Roll helps reduce Oversteer.

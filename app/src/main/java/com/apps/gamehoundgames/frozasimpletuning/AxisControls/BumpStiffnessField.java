@@ -1,7 +1,9 @@
-package com.apps.gamehoundgames.frozasimpletuning;
+package com.apps.gamehoundgames.frozasimpletuning.AxisControls;
 
-import android.util.Log;
 import android.widget.EditText;
+
+import com.apps.gamehoundgames.frozasimpletuning.FormulaControl.Formula;
+import com.apps.gamehoundgames.frozasimpletuning.InputFields.InputField;
 
 /**
  * This class is addition to base InputField. This will use Formula to calculate its field value
